@@ -39,6 +39,7 @@ exports.Dispatcher = void 0;
 const path_1 = __importDefault(require("path"));
 const glob_1 = __importDefault(require("glob"));
 const core_1 = __importDefault(require("@actions/core"));
+const install_1 = require("./managers/install");
 class Dispatcher {
     constructor(params) {
         this.params = params;
@@ -46,7 +47,8 @@ class Dispatcher {
     run() {
         return __awaiter(this, void 0, void 0, function* () {
             console.log('Dispatcher');
-            yield this.initHandlers();
+            // await this.initHandlers();
+            this.init();
             const handler = Dispatcher.handlers[this.params.action];
             if (!handler) {
                 return;
@@ -57,6 +59,9 @@ class Dispatcher {
     }
     static register(action, manger) {
         Dispatcher.handlers[action] = manger;
+    }
+    init() {
+        new install_1.InstallManager();
     }
     initHandlers() {
         return __awaiter(this, void 0, void 0, function* () {

@@ -10,6 +10,8 @@ import {
 } from './interfaces';
 import { BaseManager } from './managers/base';
 
+import { InstallManager } from './managers/install';
+
 export class Dispatcher {
   private readonly params: Parameters;
 
@@ -21,7 +23,8 @@ export class Dispatcher {
 
   public async run(): Promise<void> {
     console.log('Dispatcher')
-    await this.initHandlers();
+    // await this.initHandlers();
+    this.init();
 
     const handler = Dispatcher.handlers[this.params.action];
 
@@ -36,6 +39,10 @@ export class Dispatcher {
 
   public static register(action: Actions, manger: Manager): void {
     Dispatcher.handlers[action] = manger
+  }
+
+  private init(): void {
+    new InstallManager();
   }
 
   private async initHandlers(): Promise<void> {

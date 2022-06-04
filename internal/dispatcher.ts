@@ -48,7 +48,7 @@ export class Dispatcher {
     const files = await new Promise<Array<string>>(
       (resolve, reject) => {
         glob(
-          '**/*.@(ts|js)',
+          '**/index.@(ts|js)',
           {
             cwd: rootPath,
             ignore: 'base.@(ts|js)',

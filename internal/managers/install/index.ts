@@ -3,9 +3,9 @@ import { constants } from 'fs';
 import path from 'path';
 import os from 'os';
 
-import tc from '@actions/tool-cache';
-import core from '@actions/core';
-import exec from '@actions/exec'
+import * as tc from '@actions/tool-cache';
+import * as core from '@actions/core';
+import * as exec from '@actions/exec'
 import { Octokit } from '@octokit/rest';
 
 import { Actions, Manager, Parameters } from '../../interfaces';

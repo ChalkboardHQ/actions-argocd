@@ -1,4 +1,27 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -17,9 +40,9 @@ const promises_1 = require("fs/promises");
 const fs_1 = require("fs");
 const path_1 = __importDefault(require("path"));
 const os_1 = __importDefault(require("os"));
-const tool_cache_1 = __importDefault(require("@actions/tool-cache"));
-const core_1 = __importDefault(require("@actions/core"));
-const exec_1 = __importDefault(require("@actions/exec"));
+const tc = __importStar(require("@actions/tool-cache"));
+const core = __importStar(require("@actions/core"));
+const exec = __importStar(require("@actions/exec"));
 const rest_1 = require("@octokit/rest");
 const interfaces_1 = require("../../interfaces");
 const base_1 = require("../base");
@@ -37,14 +60,14 @@ class InstallManager extends base_1.BaseManager {
             if (!params.version) {
                 throw new Error('version parameter is required');
             }
-            this.binPath = tool_cache_1.default.find('argocd', params.version);
+            this.binPath = tc.find('argocd', params.version);
             try {
                 yield (0, promises_1.access)(this.binPath, fs_1.constants.R_OK);
-                core_1.default.addPath(this.binPath);
-                core_1.default.debug(`Found "argocd" executable at: ${this.binPath}`);
+                core.addPath(this.binPath);
+                core.debug(`Found "argocd" executable at: ${this.binPath}`);
             }
             catch (e) {
-                core_1.default.debug('Unable to find "argocd" executable, downloading it now');
+                core.debug('Unable to find "argocd" executable, downloading it now');
                 yield this.download(params.version);
             }
             return this.getVersion();
@@ -53,7 +76,7 @@ class InstallManager extends base_1.BaseManager {
     getVersion() {
         return __awaiter(this, void 0, void 0, function* () {
             let version = '';
-            yield exec_1.default.exec(this.binPath, [
+            yield exec.exec(this.binPath, [
                 'version',
                 '--client'
             ], {
@@ -85,7 +108,7 @@ class InstallManager extends base_1.BaseManager {
                 return asset.browser_download_url;
             }
             catch (err) {
-                core_1.default.setFailed(`Action failed with error ${err}`);
+                core.setFailed(`Action failed with error ${err}`);
                 return '';
             }
         });
@@ -93,12 +116,12 @@ class InstallManager extends base_1.BaseManager {
     download(version) {
         return __awaiter(this, void 0, void 0, function* () {
             const url = yield this.getExecutableUrl(version);
-            core_1.default.debug(`[debug()] getExecutableUrl: ${url}`);
+            core.debug(`[debug()] getExecutableUrl: ${url}`);
             const exe = process.platform === 'win32' ? 'argocd.exe' : 'argocd';
             const asset = path_1.default.join(os_1.default.homedir(), exe);
-            const assetPath = yield tool_cache_1.default.downloadTool(url, asset);
-            const cachedPath = yield tool_cache_1.default.cacheFile(assetPath, exe, 'argocd', version);
-            core_1.default.addPath(cachedPath);
+            const assetPath = yield tc.downloadTool(url, asset);
+            const cachedPath = yield tc.cacheFile(assetPath, exe, 'argocd', version);
+            core.addPath(cachedPath);
             this.binPath = path_1.default.join(cachedPath, exe);
             yield (0, promises_1.chmod)(this.binPath, 0o755);
         });

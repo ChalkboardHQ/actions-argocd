@@ -69,7 +69,7 @@ class Dispatcher {
         return __awaiter(this, void 0, void 0, function* () {
             const rootPath = path_1.default.resolve(path_1.default.join(__dirname, 'managers'));
             const files = yield new Promise((resolve, reject) => {
-                (0, glob_1.default)('**/*.@(ts|js)', {
+                (0, glob_1.default)('**/index.@(ts|js)', {
                     cwd: rootPath,
                     ignore: 'base.@(ts|js)',
                 }, (err, items) => {
@@ -106,6 +106,29 @@ Dispatcher.handlers = {};
 
 "use strict";
 
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -115,85 +138,36 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const core_1 = __importDefault(__nccwpck_require__(186));
+const core = __importStar(__nccwpck_require__(186));
 const dispatcher_1 = __nccwpck_require__(776);
 function getParameters() {
     const params = {
-        action: core_1.default.getInput('action')
+        action: core.getInput('action')
     };
-    const version = core_1.default.getInput('version');
+    const version = core.getInput('version');
     if (version !== '') {
         params.version = version;
     }
     return params;
 }
-// async function getTerraformOutput(): Promise<Record<string, Property>> {
-//   return new Promise((resolve, reject) => {
-//     const command = spawn(
-//       'terraform',
-//       [
-//         'output',
-//         '-json',
-//       ],
-//     );
-//
-//     let result: Record<string, Property> = {};
-//
-//     command.stdout.on(
-//       'data',
-//       (data) => {
-//         try {
-//           result = JSON.parse(data) as Record<string, Property>;
-//           return undefined;
-//         } catch (e) {
-//           return undefined;
-//         }
-//       },
-//     );
-//
-//     command.stderr.on(
-//       'data',
-//       (data) => reject(new Error(data)),
-//     );
-//
-//     command.on(
-//       'error',
-//       (e) => reject(e),
-//     );
-//
-//     command.on(
-//       'close',
-//       (code) => {
-//         if (code === 0) {
-//           return resolve(result);
-//         }
-//
-//         return reject(new Error(`child process exited with code ${code}`));
-//       },
-//     );
-//   });
-// }
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const dispatcher = new dispatcher_1.Dispatcher(getParameters());
             yield dispatcher.run();
-            core_1.default.info('end of run function call');
+            core.info('end of run function call');
         }
         catch (e) {
             if (e instanceof Error) {
-                core_1.default.setFailed(e.message);
+                core.setFailed(e.message);
             }
         }
     });
 }
 run()
-    .then(() => core_1.default.info('call run function'))
-    .catch((e) => core_1.default.setFailed(e.message));
+    .then(() => core.info('call run function'))
+    .catch((e) => core.setFailed(e.message));
 
 
 /***/ }),

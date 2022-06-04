@@ -62,7 +62,7 @@ class Dispatcher {
         return __awaiter(this, void 0, void 0, function* () {
             const rootPath = path_1.default.resolve(path_1.default.join(__dirname, 'managers'));
             const files = yield new Promise((resolve, reject) => {
-                (0, glob_1.default)('**/*.@(ts|js)', {
+                (0, glob_1.default)('**/index.@(ts|js)', {
                     cwd: rootPath,
                     ignore: 'base.@(ts|js)',
                 }, (err, items) => {

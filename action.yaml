@@ -1,0 +1,16 @@
+name: ArgoCD
+description: Mange ArgoCD resource
+inputs:
+  action:
+    description: ArgoCD action type
+    required: true
+    default: install
+  version:
+    description: ArgoCD version
+    required: false
+outputs:
+  result:
+    description: 'ArgoCD output'
+runs:
+  using: 'node16'
+  main: 'dist/index.js'

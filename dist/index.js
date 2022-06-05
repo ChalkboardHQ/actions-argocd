@@ -296,6 +296,8 @@ class InstallManager extends base_1.BaseManager {
                 throw new Error('version parameter is required');
             }
             this.binPath = tc.find('argocd', params.version);
+            console.log(`argo bin path: ${this.binPath}`);
+            core.info(`argo bin path: ${this.binPath}`);
             try {
                 yield (0, promises_1.access)(this.binPath, fs_1.constants.R_OK);
                 core.addPath(this.binPath);

@@ -298,6 +298,7 @@ class InstallManager extends base_1.BaseManager {
             core.info(`argo bin path: ${this.binPath}`);
             try {
                 yield (0, promises_1.access)(this.binPath);
+                core.info('argo bin exists');
                 core.addPath(this.binPath);
                 core.debug(`Found "argocd" executable at: ${this.binPath}`);
             }

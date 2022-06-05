@@ -29,6 +29,7 @@ export class InstallManager extends BaseManager implements Manager {
 
     try {
       await access(this.binPath);
+      core.info('argo bin exists');
       core.addPath(this.binPath);
       core.debug(`Found "argocd" executable at: ${this.binPath}`);
     } catch (e) {

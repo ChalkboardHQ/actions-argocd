@@ -87,7 +87,7 @@ class InstallManager extends base_1.BaseManager {
                 },
             });
             return {
-                version,
+                version: version.replace(/^\s+/gm, ''),
             };
         });
     }

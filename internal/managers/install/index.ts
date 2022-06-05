@@ -25,7 +25,8 @@ export class InstallManager extends BaseManager implements Manager {
     }
 
     this.binPath = tc.find('argocd', params.version);
-    core.info(`argo bin path: ${this.binPath}`)
+    console.log(`argo bin path: ${this.binPath}`);
+    core.info(`argo bin path: ${this.binPath}`);
 
     try {
       await access(this.binPath, constants.R_OK);

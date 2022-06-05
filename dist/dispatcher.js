@@ -54,9 +54,7 @@ class Dispatcher {
                 return;
             }
             const result = yield handler.run(this.params);
-            core.setOutput('output', JSON.stringify({
-                result,
-            }));
+            core.setOutput('result', JSON.stringify(result));
         });
     }
     static register(action, manger) {

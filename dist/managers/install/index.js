@@ -37,7 +37,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.InstallManager = void 0;
 const promises_1 = require("fs/promises");
-const fs_1 = require("fs");
 const path_1 = __importDefault(require("path"));
 const os_1 = __importDefault(require("os"));
 const tc = __importStar(require("@actions/tool-cache"));
@@ -61,10 +60,9 @@ class InstallManager extends base_1.BaseManager {
                 throw new Error('version parameter is required');
             }
             this.binPath = tc.find('argocd', params.version);
-            console.log(`argo bin path: ${this.binPath}`);
             core.info(`argo bin path: ${this.binPath}`);
             try {
-                yield (0, promises_1.access)(this.binPath, fs_1.constants.R_OK);
+                yield (0, promises_1.access)(this.binPath);
                 core.addPath(this.binPath);
                 core.debug(`Found "argocd" executable at: ${this.binPath}`);
             }

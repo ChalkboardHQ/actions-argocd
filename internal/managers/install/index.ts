@@ -61,7 +61,7 @@ export class InstallManager extends BaseManager implements Manager {
     );
 
     return {
-      version,
+      version: version.replace(/^\s+/gm, ''),
     };
   }
 

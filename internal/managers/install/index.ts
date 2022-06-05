@@ -1,5 +1,4 @@
 import { access, chmod } from 'fs/promises';
-import { constants } from 'fs';
 import path from 'path';
 import os from 'os';
 
@@ -7,6 +6,7 @@ import * as tc from '@actions/tool-cache';
 import * as core from '@actions/core';
 import * as exec from '@actions/exec'
 import { Octokit } from '@octokit/rest';
+import yaml from 'yaml';
 
 import { Actions, Manager, Parameters } from '../../interfaces';
 import { BaseManager } from '../base';
@@ -61,7 +61,9 @@ export class InstallManager extends BaseManager implements Manager {
     );
 
     return {
-      version: version.replace(/^\s+/gm, ''),
+      version: yaml.parse(
+        version.replace(/^\s+/gm, ''),
+      ),
     };
   }
 

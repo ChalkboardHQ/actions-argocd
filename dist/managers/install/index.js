@@ -43,6 +43,7 @@ const tc = __importStar(require("@actions/tool-cache"));
 const core = __importStar(require("@actions/core"));
 const exec = __importStar(require("@actions/exec"));
 const rest_1 = require("@octokit/rest");
+const yaml_1 = __importDefault(require("yaml"));
 const interfaces_1 = require("../../interfaces");
 const base_1 = require("../base");
 const interfaces_2 = require("./interfaces");
@@ -87,7 +88,7 @@ class InstallManager extends base_1.BaseManager {
                 },
             });
             return {
-                version: version.replace(/^\s+/gm, ''),
+                version: yaml_1.default.parse(version.replace(/^\s+/gm, '')),
             };
         });
     }

@@ -41,6 +41,7 @@
     "@actions/tool-cache": "^2.0.1",
     "@octokit/rest": "^18.12.0",
     "glob": "^8.0.3",
-    "tslib": "^2.4.0"
+    "tslib": "^2.4.0",
+    "yaml": "^2.1.1"
   }
 }

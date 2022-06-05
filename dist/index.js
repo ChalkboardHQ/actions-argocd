@@ -311,19 +311,20 @@ class InstallManager extends base_1.BaseManager {
     }
     getVersion() {
         return __awaiter(this, void 0, void 0, function* () {
-            let version = '';
+            let output = '';
             yield exec.exec(this.binPath, [
                 'version',
                 '--client'
             ], {
                 listeners: {
                     stdout: (buffer) => {
-                        version += buffer.toString();
+                        output += buffer.toString();
                     },
                 },
             });
             return {
-                version: yaml_1.default.parse(version.replace(/^\s+/gm, '')),
+                version: yaml_1.default.parse(output.replace(/^\s+/gm, ''))
+                    .argocd,
             };
         });
     }

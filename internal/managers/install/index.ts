@@ -43,7 +43,7 @@ export class InstallManager extends BaseManager implements Manager {
   }
 
   private async getVersion(): Promise<InstallResult> {
-    let version = '';
+    let output = '';
 
     await exec.exec(
       this.binPath,
@@ -54,7 +54,7 @@ export class InstallManager extends BaseManager implements Manager {
       {
         listeners: {
           stdout: (buffer: Buffer) => {
-            version += buffer.toString();
+            output += buffer.toString();
           },
         },
       }
@@ -62,8 +62,9 @@ export class InstallManager extends BaseManager implements Manager {
 
     return {
       version: yaml.parse(
-        version.replace(/^\s+/gm, ''),
-      ),
+        output.replace(/^\s+/gm, ''),
+      )
+        .argocd,
     };
   }
 

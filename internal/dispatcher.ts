@@ -11,6 +11,7 @@ import {
 import { BaseManager } from './managers/base';
 
 import { InstallManager } from './managers/install';
+import { LoginManager } from './managers/login';
 
 export class Dispatcher {
   private readonly params: Parameters;
@@ -46,6 +47,7 @@ export class Dispatcher {
 
   private init(): void {
     new InstallManager();
+    new LoginManager();
   }
 
   private async initHandlers(): Promise<void> {

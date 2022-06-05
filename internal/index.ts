@@ -14,6 +14,30 @@ function getParameters(): Parameters {
     params.version = version;
   }
 
+  const ip = core.getInput('ip');
+
+  if (ip !== '') {
+    params.ip = ip;
+  }
+
+  const port = core.getInput('port');
+
+  if (port !== '') {
+    params.port = port;
+  }
+
+  const username = core.getInput('username');
+
+  if (username !== '') {
+    params.username = username;
+  }
+
+  const password = core.getInput('password');
+
+  if (password !== '') {
+    params.password = password;
+  }
+
   return params;
 }
 

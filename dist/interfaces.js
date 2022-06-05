@@ -5,4 +5,5 @@ var Actions;
 (function (Actions) {
     Actions["none"] = "";
     Actions["install"] = "install";
+    Actions["login"] = "login";
 })(Actions = exports.Actions || (exports.Actions = {}));

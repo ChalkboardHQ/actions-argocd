@@ -35,10 +35,8 @@ export class Dispatcher {
     const result = await handler.run(this.params);
 
     core.setOutput(
-      'output',
-      JSON.stringify({
-        result,
-      }),
+      'result',
+      JSON.stringify(result),
     );
   }
 

@@ -8,6 +8,18 @@ inputs:
   version:
     description: ArgoCD version
     required: false
+  ip:
+    description: ArgoCD service cluster ip
+    required: false
+  port:
+    description: ArgoCD service cluster port
+    required: false
+  username:
+    description: ArgoCD username
+    required: false
+  password:
+    description: ArgoCD password
+    required: false
 outputs:
   result:
     description: 'ArgoCD output'

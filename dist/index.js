@@ -45,7 +45,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Dispatcher = void 0;
 const path_1 = __importDefault(__nccwpck_require__(1017));
 const glob_1 = __importDefault(__nccwpck_require__(1957));
-const core_1 = __importDefault(__nccwpck_require__(2186));
+const core = __importStar(__nccwpck_require__(2186));
 const install_1 = __nccwpck_require__(3372);
 class Dispatcher {
     constructor(params) {
@@ -61,7 +61,9 @@ class Dispatcher {
                 return;
             }
             const result = yield handler.run(this.params);
-            core_1.default.setOutput('output', result);
+            core.setOutput('output', JSON.stringify({
+                result,
+            }));
         });
     }
     static register(action, manger) {

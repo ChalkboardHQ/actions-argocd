@@ -1,7 +1,7 @@
 import path from 'path';
 
 import glob from 'glob';
-import core from '@actions/core';
+import * as core from '@actions/core';
 
 import {
   Actions,
@@ -34,7 +34,12 @@ export class Dispatcher {
 
     const result = await handler.run(this.params);
 
-    core.setOutput('output', result);
+    core.setOutput(
+      'output',
+      JSON.stringify({
+        result,
+      }),
+    );
   }
 
   public static register(action: Actions, manger: Manager): void {

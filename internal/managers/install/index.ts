@@ -61,7 +61,7 @@ export class InstallManager extends BaseManager implements Manager {
     );
 
     return {
-      version,
+      version: JSON.parse(version).argocd,
     };
   }
 

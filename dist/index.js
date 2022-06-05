@@ -322,7 +322,7 @@ class InstallManager extends base_1.BaseManager {
                 },
             });
             return {
-                version,
+                version: JSON.parse(version).argocd,
             };
         });
     }

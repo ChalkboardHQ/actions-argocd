@@ -24,7 +24,10 @@ export class InstallManager extends BaseManager implements Manager {
       throw new Error('version parameter is required');
     }
 
-    this.binPath = tc.find('argocd', params.version);
+    this.binPath = path.join(
+      tc.find('argocd', params.version),
+      'argocd',
+    );
     core.info(`argo bin path: ${this.binPath}`);
 
     try {

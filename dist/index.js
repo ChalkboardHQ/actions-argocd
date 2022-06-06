@@ -457,12 +457,11 @@ class LoginManager extends base_1.BaseManager {
                 username: params.username,
                 password: params.password
             });
-            console.log(res);
-            // if (!res.data.token) {
-            //   return undefined;
-            // }
+            if (res.status !== 200) {
+                throw new Error('Invalid request');
+            }
             return {
-                token: ''
+                token: res.data.token,
             };
         });
     }

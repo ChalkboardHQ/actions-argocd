@@ -62,6 +62,7 @@ class Dispatcher {
                 return;
             }
             const result = yield handler.run(this.params);
+            console.log(JSON.stringify(result));
             core.setOutput('result', JSON.stringify(result));
         });
     }

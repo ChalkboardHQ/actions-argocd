@@ -41,13 +41,12 @@ export class LoginManager extends BaseManager implements Manager {
       },
     );
 
-    console.log(res);
-    // if (!res.data.token) {
-    //   return undefined;
-    // }
+    if (res.status !== 200) {
+      throw new Error('Invalid request');
+    }
 
     return {
-      token: ''
+      token: res.data.token,
     };
   }
 }

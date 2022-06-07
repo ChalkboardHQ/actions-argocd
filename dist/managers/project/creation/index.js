@@ -32,7 +32,7 @@ class ProjectCreationManager extends base_1.BaseManager {
             const agent = new https_1.default.Agent({
                 rejectUnauthorized: false
             });
-            const res = yield axios_1.default.post(`https://${params.ip}:${params.port}/api/v1/session`, {
+            const res = yield axios_1.default.post(`https://${params.ip}:${params.port}/api/v1/projects`, {
                 project: {
                     metadata: {
                         name: "test"

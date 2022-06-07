@@ -26,7 +26,7 @@ export class ProjectCreationManager extends BaseManager implements Manager {
     });
 
     const res = await axios.post(
-      `https://${params.ip}:${params.port}/api/v1/session`,
+      `https://${params.ip}:${params.port}/api/v1/projects`,
       {
         project: {
           metadata: {

@@ -30,7 +30,7 @@ export class ProjectCreationManager extends BaseManager implements Manager {
       {
         project: {
           metadata: {
-            name: "test"
+            name: params.name
           },
           spec: {
             // description: "test1"

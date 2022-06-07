@@ -531,7 +531,7 @@ class ProjectCreationManager extends base_1.BaseManager {
             const res = yield axios_1.default.post(`https://${params.ip}:${params.port}/api/v1/projects`, {
                 project: {
                     metadata: {
-                        name: "test"
+                        name: params.name
                     },
                     spec: {
                     // description: "test1"

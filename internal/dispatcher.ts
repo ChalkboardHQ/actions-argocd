@@ -34,12 +34,9 @@ export class Dispatcher {
     }
 
     const result = await handler.run(this.params);
-    console.log(JSON.stringify(result))
 
-    core.setOutput(
-      'result',
-      JSON.stringify(result),
-    );
+    Object.entries(result)
+      .forEach(([key, value]) => core.setOutput(key, value.toString()))
   }
 
   public static register(action: Actions, manger: Manager): void {

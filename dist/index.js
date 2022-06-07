@@ -62,8 +62,8 @@ class Dispatcher {
                 return;
             }
             const result = yield handler.run(this.params);
-            console.log(JSON.stringify(result));
-            core.setOutput('result', JSON.stringify(result));
+            Object.entries(result)
+                .forEach(([key, value]) => core.setOutput(key, value.toString()));
         });
     }
     static register(action, manger) {

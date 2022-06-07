@@ -19,7 +19,7 @@ const interfaces_1 = require("../../../interfaces");
 const base_1 = require("../../base");
 class ProjectCreationManager extends base_1.BaseManager {
     get action() {
-        return interfaces_1.Actions.login;
+        return interfaces_1.Actions.projectCreate;
     }
     run(params) {
         return __awaiter(this, void 0, void 0, function* () {

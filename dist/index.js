@@ -515,7 +515,7 @@ const interfaces_1 = __nccwpck_require__(917);
 const base_1 = __nccwpck_require__(880);
 class ProjectCreationManager extends base_1.BaseManager {
     get action() {
-        return interfaces_1.Actions.login;
+        return interfaces_1.Actions.projectCreate;
     }
     run(params) {
         return __awaiter(this, void 0, void 0, function* () {

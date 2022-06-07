@@ -9,7 +9,7 @@ import { ProjectCreationResult } from './interfaces';
 
 export class ProjectCreationManager extends BaseManager implements Manager {
   public get action(): Actions {
-    return Actions.login;
+    return Actions.projectCreate;
   }
 
   public async run(params: Parameters): Promise<ProjectCreationResult> {

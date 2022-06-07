@@ -36,7 +36,7 @@ class LoginManager extends base_1.BaseManager {
                 throw new Error('password parameter is required');
             }
             const agent = new https_1.default.Agent({
-                rejectUnauthorized: false
+                rejectUnauthorized: false,
             });
             const res = yield axios_1.default.post(`https://${params.ip}:${params.port}/api/v1/session`, {
                 username: params.username,

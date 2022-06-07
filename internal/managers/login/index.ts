@@ -30,7 +30,7 @@ export class LoginManager extends BaseManager implements Manager {
     }
 
     const agent = new https.Agent({
-      rejectUnauthorized: false
+      rejectUnauthorized: false,
     });
 
     const res = await axios.post(

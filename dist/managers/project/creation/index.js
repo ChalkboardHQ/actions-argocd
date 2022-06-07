@@ -30,7 +30,7 @@ class ProjectCreationManager extends base_1.BaseManager {
                 throw new Error('token parameter is required');
             }
             const agent = new https_1.default.Agent({
-                rejectUnauthorized: false
+                rejectUnauthorized: false,
             });
             const res = yield axios_1.default.post(`https://${params.ip}:${params.port}/api/v1/projects`, {
                 project: {
@@ -51,6 +51,7 @@ class ProjectCreationManager extends base_1.BaseManager {
             if (res.status !== 200) {
                 throw new Error('Invalid request');
             }
+            console.log(res);
             return {
                 name: res.data.metadata.name,
             };

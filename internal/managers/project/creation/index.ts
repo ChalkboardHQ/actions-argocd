@@ -22,7 +22,7 @@ export class ProjectCreationManager extends BaseManager implements Manager {
     }
 
     const agent = new https.Agent({
-      rejectUnauthorized: false
+      rejectUnauthorized: false,
     });
 
     const res = await axios.post(
@@ -49,6 +49,8 @@ export class ProjectCreationManager extends BaseManager implements Manager {
     if (res.status !== 200) {
       throw new Error('Invalid request');
     }
+
+    console.log(res)
 
     return {
       name: res.data.metadata.name,

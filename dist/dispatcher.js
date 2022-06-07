@@ -41,6 +41,7 @@ const glob_1 = __importDefault(require("glob"));
 const core = __importStar(require("@actions/core"));
 const install_1 = require("./managers/install");
 const login_1 = require("./managers/login");
+const creation_1 = require("./managers/project/creation");
 class Dispatcher {
     constructor(params) {
         this.params = params;
@@ -65,6 +66,7 @@ class Dispatcher {
     init() {
         new install_1.InstallManager();
         new login_1.LoginManager();
+        new creation_1.ProjectCreationManager();
     }
     initHandlers() {
         return __awaiter(this, void 0, void 0, function* () {

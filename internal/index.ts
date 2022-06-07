@@ -5,7 +5,8 @@ import { Dispatcher } from './dispatcher';
 
 function getParameters(): Parameters {
   const params: Parameters = {
-    action: core.getInput('action') as Actions
+    action: core.getInput('action') as Actions,
+    upsert: core.getInput('upsert') === 'true',
   };
 
   const version = core.getInput('version');
@@ -36,6 +37,18 @@ function getParameters(): Parameters {
 
   if (password !== '') {
     params.password = password;
+  }
+
+  const name = core.getInput('name');
+
+  if (name !== '') {
+    params.name = name;
+  }
+
+  const token = core.getInput('token');
+
+  if (token !== '') {
+    params.token = token;
   }
 
   return params;

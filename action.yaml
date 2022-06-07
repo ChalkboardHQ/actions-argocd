@@ -20,6 +20,15 @@ inputs:
   password:
     description: ArgoCD password
     required: false
+  token:
+    description: ArgoCD auth JWT token
+    required: false
+  name:
+    description: ArgoCD resource name
+    required: false
+  upsert:
+    description: ArgoCD resource name
+    required: false
 outputs:
   result:
     description: 'ArgoCD output'

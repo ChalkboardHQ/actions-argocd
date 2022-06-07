@@ -1,9 +1,5 @@
-import { access, chmod } from 'fs/promises';
-import path from 'path';
-import os from 'os';
+import https from 'https';
 
-import * as tc from '@actions/tool-cache';
-import * as core from '@actions/core';
 import axios from 'axios';
 
 import { Actions, Manager, Parameters } from '../../interfaces';
@@ -33,11 +29,18 @@ export class LoginManager extends BaseManager implements Manager {
       throw new Error('password parameter is required');
     }
 
+    const agent = new https.Agent({
+      rejectUnauthorized: false
+    });
+
     const res = await axios.post(
       `https://${params.ip}:${params.port}/api/v1/session`,
       {
         username: params.username,
         password: params.password
+      },
+      {
+        httpsAgent: agent,
       },
     );
 

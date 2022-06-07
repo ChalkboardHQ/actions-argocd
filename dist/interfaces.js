@@ -6,4 +6,5 @@ var Actions;
     Actions["none"] = "";
     Actions["install"] = "install";
     Actions["login"] = "login";
+    Actions["projectCreate"] = "projectCreate";
 })(Actions = exports.Actions || (exports.Actions = {}));

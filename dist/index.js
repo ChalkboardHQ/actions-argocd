@@ -48,6 +48,7 @@ const glob_1 = __importDefault(__nccwpck_require__(1957));
 const core = __importStar(__nccwpck_require__(2186));
 const install_1 = __nccwpck_require__(3372);
 const login_1 = __nccwpck_require__(147);
+const creation_1 = __nccwpck_require__(7948);
 class Dispatcher {
     constructor(params) {
         this.params = params;
@@ -72,6 +73,7 @@ class Dispatcher {
     init() {
         new install_1.InstallManager();
         new login_1.LoginManager();
+        new creation_1.ProjectCreationManager();
     }
     initHandlers() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -151,7 +153,8 @@ const core = __importStar(__nccwpck_require__(2186));
 const dispatcher_1 = __nccwpck_require__(2776);
 function getParameters() {
     const params = {
-        action: core.getInput('action')
+        action: core.getInput('action'),
+        upsert: core.getInput('upsert') === 'true',
     };
     const version = core.getInput('version');
     if (version !== '') {
@@ -172,6 +175,14 @@ function getParameters() {
     const password = core.getInput('password');
     if (password !== '') {
         params.password = password;
+    }
+    const name = core.getInput('name');
+    if (name !== '') {
+        params.name = name;
+    }
+    const token = core.getInput('token');
+    if (token !== '') {
+        params.token = token;
     }
     return params;
 }
@@ -208,6 +219,7 @@ var Actions;
     Actions["none"] = "";
     Actions["install"] = "install";
     Actions["login"] = "login";
+    Actions["projectCreate"] = "projectCreate";
 })(Actions = exports.Actions || (exports.Actions = {}));
 
 
@@ -433,6 +445,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.LoginManager = void 0;
+const https_1 = __importDefault(__nccwpck_require__(5687));
 const axios_1 = __importDefault(__nccwpck_require__(6545));
 const interfaces_1 = __nccwpck_require__(917);
 const base_1 = __nccwpck_require__(880);
@@ -454,9 +467,14 @@ class LoginManager extends base_1.BaseManager {
             if (!params.password) {
                 throw new Error('password parameter is required');
             }
+            const agent = new https_1.default.Agent({
+                rejectUnauthorized: false
+            });
             const res = yield axios_1.default.post(`https://${params.ip}:${params.port}/api/v1/session`, {
                 username: params.username,
                 password: params.password
+            }, {
+                httpsAgent: agent,
             });
             if (res.status !== 200) {
                 throw new Error('Invalid request');
@@ -468,6 +486,74 @@ class LoginManager extends base_1.BaseManager {
     }
 }
 exports.LoginManager = LoginManager;
+
+
+/***/ }),
+
+/***/ 7948:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ProjectCreationManager = void 0;
+const https_1 = __importDefault(__nccwpck_require__(5687));
+const axios_1 = __importDefault(__nccwpck_require__(6545));
+const interfaces_1 = __nccwpck_require__(917);
+const base_1 = __nccwpck_require__(880);
+class ProjectCreationManager extends base_1.BaseManager {
+    get action() {
+        return interfaces_1.Actions.login;
+    }
+    run(params) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (!params.name) {
+                throw new Error('name parameter is required');
+            }
+            if (!params.token) {
+                throw new Error('token parameter is required');
+            }
+            const agent = new https_1.default.Agent({
+                rejectUnauthorized: false
+            });
+            const res = yield axios_1.default.post(`https://${params.ip}:${params.port}/api/v1/session`, {
+                project: {
+                    metadata: {
+                        name: "test"
+                    },
+                    spec: {
+                    // description: "test1"
+                    },
+                },
+                upsert: params.upsert,
+            }, {
+                headers: {
+                    Authorization: `Bearer ${params.token}`,
+                },
+                httpsAgent: agent,
+            });
+            if (res.status !== 200) {
+                throw new Error('Invalid request');
+            }
+            return {
+                name: res.data.metadata.name,
+            };
+        });
+    }
+}
+exports.ProjectCreationManager = ProjectCreationManager;
 
 
 /***/ }),
